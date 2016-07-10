@@ -7,6 +7,8 @@ def createcookie(proxy = 0):
     return requests.get('https://www.instagram.com/accounts/web_create_ajax/', headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, proxies=proxy)
 def register(c,login,password,proxy = 0):
     return requests.post('https://www.instagram.com/accounts/web_create_ajax/', headers = {'referer':'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies = c.cookies, data = {'email':login+'@gmail.com', 'password':password, 'username':login, 'fullName':login, 'guid':c.cookies['mid']}, proxies=proxy)
+def available(c,login,password):
+    return requests.post('https://www.instagram.com/accounts/web_create_ajax/attemp', headers = {'referer':'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies = c.cookies, data = {'email':login+'@gmail.com', 'password':password, 'username':login, 'fullName':login, 'guid':c.cookies['mid']})
 def uploadphoto(c,photo, proxy = 0):
     files = {'profile_pic': (photo, open('avatars/'+photo, 'rb'), 'image/jpeg')}
     return requests.post('https://www.instagram.com/accounts/web_change_profile_picture/', headers={'referer': 'https://www.instagram.com/', 'origin': 'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies=c.cookies, files=files, proxies=proxy)
@@ -33,9 +35,8 @@ def nf(proxy):
         login = lp[0]
         password = lp[1].rstrip()
         cookie = createcookie({'https':proxy.rstrip()})
-        #print('1')
+        print(available(c,login,password))
         r = register(cookie,login,password,{'https':proxy.rstrip()})
-        print('2')
         print('Account registration attemp ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n response: '+ r.text + '\n')
         jsonlr = json.loads(r.text)
         invalid_txt.insert(END, proxy + ' | '+ str(jsonlr))
