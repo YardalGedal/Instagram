@@ -3,21 +3,19 @@ from tkinter import *
 from tkinter.messagebox import *
 from multiprocessing.dummy import Pool as ThreadPool
 from os import listdir
-def createcookie():
-    return requests.get('https://www.instagram.com/accounts/web_create_ajax/', headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'})
+def createcookie(proxy = 0):
+    return requests.get('https://www.instagram.com/accounts/web_create_ajax/', headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, proxies=proxy)
 def register(c,login,password,proxy = 0):
-    xcb=rastgele('13')+"_"+rastgele('92')+"-"+rastgele('10')+"_"+rastgele('116')+"-"+rastgele('2')
-    xqs=','.join([sayi(str(random.randrange(1,4))) for c in range(1,293)])
     return requests.post('https://www.instagram.com/accounts/web_create_ajax/', headers = {'referer':'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies = c.cookies, data = {'email':login+'@gmail.com', 'password':password, 'username':login, 'fullName':login, 'guid':c.cookies['mid'], 'qs': xqs, 'cb':xcb}, proxies=proxy)
-def uploadphoto(c,photo):
+def uploadphoto(c,photo, proxy = 0):
     files = {'profile_pic': (photo, open('avatars/'+photo, 'rb'), 'image/jpeg')}
-    return requests.post('https://www.instagram.com/accounts/web_change_profile_picture/', headers={'referer': 'https://www.instagram.com/', 'origin': 'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies=c.cookies, files=files)
-def userinfo(c,login,phone_number,bio,gender,external_url):
+    return requests.post('https://www.instagram.com/accounts/web_change_profile_picture/', headers={'referer': 'https://www.instagram.com/', 'origin': 'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies=c.cookies, files=files, proxies=proxy)
+def userinfo(c,login,phone_number,bio,gender,external_url, proxy = 0):
     return requests.post('https://www.instagram.com/accounts/edit/',
                          headers={'referer': 'https://www.instagram.com/', 'x-csrftoken': c.cookies['csrftoken'],
                                   'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies=c.cookies,
                          data={'first_name': login, 'email': login +'@gmail.com', 'username': login,
-                               'phone_number': phone_number, 'gender': gender, 'biography': bio, 'external_url': external_url, 'chaining_enable': 'on'})
+                               'phone_number': phone_number, 'gender': gender, 'biography': bio, 'external_url': external_url, 'chaining_enable': 'on'}, proxies=proxy)
 def rastgele(strt):
     mtn = "ABCDEFGHIJKLMNOPRSTUVYZXabcdefghijklmnoprstuvyzx0123456789"
     resp = ""
@@ -50,7 +48,7 @@ def nf(proxy):
         lp = login_gen(loginlist)
         login = lp[0]
         password = lp[1].rstrip()
-        cookie = createcookie()
+        cookie = createcookie({'https':proxy.rstrip()})
         r = register(cookie,login,password,{'https':proxy.rstrip()})
         print('Account registration attemp ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n response: '+ r.text + '\n')
         jsonlr = json.loads(r.text)
@@ -61,10 +59,10 @@ def nf(proxy):
             valids.write(login + ':' + password + '\n')
             valids.close()
             global photolist
-            u = userinfo(r, login, i_p_n.get(), bio.get(), forgender[gender_v.get()], e_u.get())
+            u = userinfo(r, login, i_p_n.get(), bio.get(), forgender[gender_v.get()], e_u.get(), {'https':proxy.rstrip()})
             print(u.text)
             photo = photolist[random.randrange(0, len(photolist) - 1)]
-            p = uploadphoto(u, photo)
+            p = uploadphoto(u, photo, {'https':proxy.rstrip()})
             print('p ' + p.text)
     except:
         pass
