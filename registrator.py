@@ -16,20 +16,6 @@ def userinfo(c,login,phone_number,bio,gender,external_url, proxy = 0):
                                   'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies=c.cookies,
                          data={'first_name': login, 'email': login +'@gmail.com', 'username': login,
                                'phone_number': phone_number, 'gender': gender, 'biography': bio, 'external_url': external_url, 'chaining_enable': 'on'}, proxies=proxy)
-def rastgele(strt):
-    mtn = "ABCDEFGHIJKLMNOPRSTUVYZXabcdefghijklmnoprstuvyzx0123456789"
-    resp = ""
-    for i in strt:
-        resp = resp + mtn[math.floor(random.random() * 57)]
-    return resp
-
-def sayi(strt):
-    mtn = "0123456789"
-    resp = ""
-    for i in strt:
-        resp = resp + mtn[math.floor(random.random() * 10)]
-    return resp
-
 def login_gen(loginlist):
     m = len(loginlist)
     line = loginlist[random.randrange(0, m - 1)]
@@ -42,14 +28,12 @@ forgender = {'Мужской': '1', 'Женский': '2', 'Не указано'
  
 def nf(proxy):
     try:
-        #login = 'r'+str(random.randrange(1,9))+'o'+str(random.randrange(1,9))+'m'+str(random.randrange(1,9))+'a'+str(random.randrange(10000,999999))
-        #password = 'r'+str(random.randrange(1,9))+'o'+str(random.randrange(1,9))+'m'+str(random.randrange(1,9))+'a'+str(random.randrange(10000,999999))
         global loginlist
         lp = login_gen(loginlist)
         login = lp[0]
         password = lp[1].rstrip()
         cookie = createcookie({'https':proxy.rstrip()})
-        print('1')
+        #print('1')
         r = register(cookie,login,password,{'https':proxy.rstrip()})
         print('2')
         print('Account registration attemp ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n response: '+ r.text + '\n')
