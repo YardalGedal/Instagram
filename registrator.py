@@ -37,7 +37,7 @@ def nf(proxy):
         cookie = createcookie()
         print('1')
         available_r = available(cookie,login,password)
-        print(available_r)
+        print(available_r.text)
         r = register(available_r,login,password,{'https':proxy.rstrip()})
         print('3')
         print('Account registration attemp ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n available: ' + available.text + '\n response: ' + r.text)
