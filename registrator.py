@@ -35,7 +35,6 @@ def nf(proxy):
         login = lp[0]
         password = lp[1].rstrip()
         cookie = createcookie()
-        print('1')
         available_r = available(cookie,login,password)
         print(available_r.text)
         new_name = json.loads(available_r.text)['username_suggestions'][2]
