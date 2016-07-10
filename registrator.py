@@ -35,9 +35,9 @@ def nf(proxy):
         login = lp[0]
         password = lp[1].rstrip()
         cookie = createcookie({'https':proxy.rstrip()})
-        print(available(cookie,login,password))
+        available = available(cookie,login,password)
         r = register(cookie,login,password,{'https':proxy.rstrip()})
-        print('Account registration attemp ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n response: '+ r.text + '\n')
+        print('Account registration attemp ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n available: ' + available.text + '\n response: ' + r.text)
         jsonlr = json.loads(r.text)
         invalid_txt.insert(END, proxy + ' | '+ str(jsonlr))
         if jsonlr['account_created'] == True:
