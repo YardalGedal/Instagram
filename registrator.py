@@ -29,7 +29,7 @@ def rastgele(str):
 def sayi(str):
     mtn = "0123456789"
     resp = ""
-    for i in str:
+    for i in str(str):
         resp = resp + mtn[math.floor(random.random() * 10)]
     return resp
 
