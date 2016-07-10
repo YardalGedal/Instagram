@@ -35,8 +35,11 @@ def nf(proxy):
         login = lp[0]
         password = lp[1].rstrip()
         cookie = createcookie({'https':proxy.rstrip()})
+        print(1)
         available = available(cookie,login,password)
+        print(2)
         r = register(cookie,login,password,{'https':proxy.rstrip()})
+        print(3)
         print('Account registration attemp ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n available: ' + available.text + '\n response: ' + r.text)
         jsonlr = json.loads(r.text)
         invalid_txt.insert(END, proxy + ' | '+ str(jsonlr))
