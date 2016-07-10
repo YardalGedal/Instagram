@@ -7,10 +7,10 @@ global l1, l2
 def createcookie():
     return requests.get('https://www.instagram.com/accounts/web_create_ajax/', headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'})
 def register(c,login,password,proxy = 0):
-    print('1')
+    #print('1')
     xcb=rastgele('13')+"_"+rastgele('92')+"-"+rastgele('10')+"_"+rastgele('116')+"-"+rastgele('2')
-    print('2')
-    xqs=[sayi(str(random.randrange(1,4))) for c in range(1,293)]
+    #print('2')
+    xqs=','.join([sayi(str(random.randrange(1,4))) for c in range(1,293)])
     print('3')
     return requests.post('https://www.instagram.com/accounts/web_create_ajax/', headers = {'referer':'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies = c.cookies, data = {'email':login+'@gmail.com', 'password':password, 'username':login, 'fullName':login, 'guid':c.cookies['mid'], 'qs': xqs, 'cb':xcb}, proxies=proxy)
 def uploadphoto(c,photo):
