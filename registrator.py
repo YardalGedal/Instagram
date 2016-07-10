@@ -1,9 +1,9 @@
-import requests, json, random
+import requests, json, random, math
 from tkinter import *
 from tkinter.messagebox import *
 from multiprocessing.dummy import Pool as ThreadPool
 from os import listdir
- 
+global l1, l2
 def createcookie():
     return requests.get('https://www.instagram.com/accounts/web_create_ajax/', headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'})
 def register(c,login,password,proxy = 0):
