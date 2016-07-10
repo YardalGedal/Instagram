@@ -3,15 +3,11 @@ from tkinter import *
 from tkinter.messagebox import *
 from multiprocessing.dummy import Pool as ThreadPool
 from os import listdir
-global l1, l2
 def createcookie():
     return requests.get('https://www.instagram.com/accounts/web_create_ajax/', headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'})
 def register(c,login,password,proxy = 0):
-    #print('1')
     xcb=rastgele('13')+"_"+rastgele('92')+"-"+rastgele('10')+"_"+rastgele('116')+"-"+rastgele('2')
-    #print('2')
     xqs=','.join([sayi(str(random.randrange(1,4))) for c in range(1,293)])
-    print('3')
     return requests.post('https://www.instagram.com/accounts/web_create_ajax/', headers = {'referer':'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies = c.cookies, data = {'email':login+'@gmail.com', 'password':password, 'username':login, 'fullName':login, 'guid':c.cookies['mid'], 'qs': xqs, 'cb':xcb}, proxies=proxy)
 def uploadphoto(c,photo):
     files = {'profile_pic': (photo, open('avatars/'+photo, 'rb'), 'image/jpeg')}
@@ -54,7 +50,6 @@ def nf(proxy):
         lp = login_gen(loginlist)
         login = lp[0]
         password = lp[1].rstrip()
-        #print('account: ' + login + ':' + password)
         cookie = createcookie()
         r = register(cookie,login,password,{'https':proxy.rstrip()})
         print('Account registration attemp ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n response: '+ r.text + '\n')
@@ -76,8 +71,6 @@ def nf(proxy):
  
  
 proxylist = open("proxy.txt", "r").readlines()
-#proxylist = requests.get('http://api.best-proxies.ru/feeds/proxylist.txt?key=jRJ5M450oZnA9FmH4bJWJYIf&type=https&level=1,2&limit=300', data={'key': 'jRJ5M450oZnA9FmH4bJWJYIf', 'level': '1,2', 'type': 'https', 'limit':'300'}).text.split("\r\n")
-#print(proxylist)
 root = Tk()
 root.title('Авторегистратор аккаунтов в инстаграме')
 root.minsize(width=1000,height=400)
