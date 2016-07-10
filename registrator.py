@@ -36,10 +36,12 @@ def nf(proxy):
         password = lp[1].rstrip()
         cookie = createcookie()
         available_r = available(cookie,login,password)
+        
         try:
             login = json.loads(available_r.text)['username_suggestions'][2]
         except:
             pass
+        
         r = register(available_r,login,password,{'https':proxy.rstrip()})
         print('Account registration attemp ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n available: ' + available_r.text + '\n response: ' + r.text)
         jsonlr = json.loads(r.text)
