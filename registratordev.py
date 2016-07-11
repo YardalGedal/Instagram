@@ -171,4 +171,3 @@ valid_scrollbar.config(command=valid_txt.yview)
  
 gui = ThreadPool(1)
 gui.map_async(root.mainloop())
-gui.close()
