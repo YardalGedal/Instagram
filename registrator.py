@@ -73,7 +73,7 @@ def buttonreg(event):
     pool.close()
     #pool.join()
  
-def finish():
+def finish(proxy):
     showinfo("Регистратор", "Все аккаунты были успешно зарегистрированы")
 
 invalid_txt = Listbox(root, bg="white", fg="black")
