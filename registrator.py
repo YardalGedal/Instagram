@@ -69,9 +69,8 @@ root.maxsize(width=1000,height=400)
  
 def buttonreg(event):
     pool = ThreadPool(int(cthreads.get()))
-    showinfo("Регистратор", "Работа завершена")
     pool.map_async(nf, proxylist, callback=finish_message)
-    pool.close()
+    #pool.close()
     #pool.join()
 
 def finish_message(proxy):
