@@ -1,6 +1,6 @@
 import requests, json, random, ctypes
 from tkinter import *
-from multiprocessing import Pool
+from multiprocessing.dummy import Pool as ThreadPool
 from os import listdir
 def createcookie(proxy = 0):
     return requests.get('https://www.instagram.com/accounts/web_create_ajax/', headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, proxies=proxy)
@@ -69,8 +69,8 @@ root.maxsize(width=1000,height=400)
  
 def buttonreg(event):
     pool = ThreadPool(int(cthreads.get()))
-    pool.map_async(nf, proxylist, callback=ctypes.windll.user32.MessageBoxW(None,"Выполнение завершено","Регистратор",0x40 | 0x0))
-    pool.wait()
+    pool.apply_async(nf, proxylist, callback=ctypes.windll.user32.MessageBoxW(None,"Выполнение завершено","Регистратор",0x40 | 0x0))
+    #pool.wait()
     pool.close()
 
 invalid_txt = Listbox(root, bg="white", fg="black")
