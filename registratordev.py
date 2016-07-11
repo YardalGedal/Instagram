@@ -170,5 +170,6 @@ valid_scrollbar.config(command=valid_txt.yview)
 
 def rootmainloop():
     root.mainloop()
-p = Process(target=rootmainloop, args=())
+    
+p = Process(target=rootmainloop, args=(,))
 p.start()
