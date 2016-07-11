@@ -1,6 +1,6 @@
-import requests, json, random, math
-from tkinter import *
-from tkinter.messagebox import *
+import requests, json, random, math, tkinter, tkinter.messagebox
+#from tkinter import *
+#from tkinter.messagebox import *
 from multiprocessing.dummy import Pool as ThreadPool
 from os import listdir
 def createcookie(proxy = 0):
