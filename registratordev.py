@@ -1,6 +1,6 @@
 import requests, json, random, ctypes
 from tkinter import *
-from multiprocessing.dummy import Pool as ThreadPool
+from multiprocessing import Pool
 from os import listdir
 def createcookie(proxy = 0):
     return requests.get('https://www.instagram.com/accounts/web_create_ajax/', headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, proxies=proxy)
