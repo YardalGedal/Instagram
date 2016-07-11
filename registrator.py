@@ -7,8 +7,8 @@ def createcookie(proxy = 0):
     return requests.get('https://www.instagram.com/accounts/web_create_ajax/', headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, proxies=proxy)
 def register(c,login,password,proxy = 0):
     return requests.post('https://www.instagram.com/accounts/web_create_ajax/', headers = {'referer':'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies = c.cookies, data = {'email':login+'@gmail.com', 'password':password, 'username':login, 'fullName':login}, proxies=proxy)
-def available(c,login,password):
-    return requests.post('https://www.instagram.com/accounts/web_create_ajax/attempt/', headers = {'referer':'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies = c.cookies, data = {'email':login+'@gmail.com', 'password':password, 'username':login, 'first_name':login})
+def available(c,login,password, proxy=0):
+    return requests.post('https://www.instagram.com/accounts/web_create_ajax/attempt/', headers = {'referer':'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies = c.cookies, data = {'email':login+'@gmail.com', 'password':password, 'username':login, 'first_name':login}, proxies=proxy)
 def uploadphoto(c,photo, proxy = 0):
     files = {'profile_pic': (photo, open('avatars/'+photo, 'rb'), 'image/jpeg')}
     return requests.post('https://www.instagram.com/accounts/web_change_profile_picture/', headers={'referer': 'https://www.instagram.com/', 'origin': 'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies=c.cookies, files=files, proxies=proxy)
@@ -34,8 +34,8 @@ def nf(proxy):
         lp = login_gen(loginlist)
         login = lp[0]
         password = lp[1].rstrip()
-        cookie = createcookie()
-        available_r = available(cookie,login,password)
+        cookie = createcookie({'https':proxy.rstrip()})
+        available_r = available(cookie,login,password, {'https':proxy.rstrip()})
         
         try:
             login = json.loads(available_r.text)['username_suggestions'][2]
