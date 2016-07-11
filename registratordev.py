@@ -170,6 +170,6 @@ valid_txt.config(yscrollcommand=valid_scrollbar.set)
 valid_scrollbar.config(command=valid_txt.yview)
  
 
-#main = ThreadPool(1)
-#main.map_async(root.mainloop())
-root.mainloop()
+main = ThreadPool(1)
+main.map_async(root.mainloop())
+#root.mainloop()
