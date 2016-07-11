@@ -1,6 +1,5 @@
 import requests, json, random, ctypes
 from tkinter import *
-from multiprocessing import Process
 from multiprocessing.dummy import Pool as ThreadPool
 from os import listdir
 def createcookie(proxy = 0):
@@ -168,8 +167,5 @@ valid_scrollbar.pack(side=RIGHT, fill=Y)
 valid_txt.config(yscrollcommand=valid_scrollbar.set)
 valid_scrollbar.config(command=valid_txt.yview)
 
-def rootmainloop():
-    root.mainloop()
-    
-p = Process(target=rootmainloop)
-p.start()
+gui = ThreadPool(1)
+gui.map_async(root.mainloop())
