@@ -75,7 +75,7 @@ def buttonreg(event):
     #pool.join()
 
 def finish_message(proxy):
-    root.showinfo("Регистратор", "Работа завершена")
+    showinfo("Регистратор", "Работа завершена")
  
 invalid_txt = Listbox(root, bg="white", fg="black")
 valid_txt = Text(root, bg="white", fg="black")
