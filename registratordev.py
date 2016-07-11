@@ -1,4 +1,4 @@
-import requests, json, random, math, tkinter, tkinter.messagebox
+import requests, json, random, math, tkinter
 #from tkinter import *
 #from tkinter.messagebox import *
 from multiprocessing.dummy import Pool as ThreadPool
