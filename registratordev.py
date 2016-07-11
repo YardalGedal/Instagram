@@ -62,6 +62,7 @@ def nf(proxy):
  
  
 proxylist = open("proxy.txt", "r").readlines()
+global root
 root = Tk()
 root.title('Авторегистратор аккаунтов в инстаграме')
 root.minsize(width=1000,height=400)
@@ -74,7 +75,7 @@ def buttonreg(event):
     #pool.join()
 
 def finish_message(proxy):
-    showinfo("Регистратор", "Работа завершена")
+    root.showinfo("Регистратор", "Работа завершена")
  
 invalid_txt = Listbox(root, bg="white", fg="black")
 valid_txt = Text(root, bg="white", fg="black")
