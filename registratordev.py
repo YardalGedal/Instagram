@@ -70,12 +70,9 @@ root.maxsize(width=1000,height=400)
  
 def buttonreg(event):
     pool = ThreadPool(int(cthreads.get()))
-    pool.map_async(nf, proxylist, callback=finish_message)
+    pool.map_async(nf, proxylist, callback=showinfo("Регистратор", "Работа завершена"))
     pool.close()
     #pool.join()
-
-def finish_message(proxy):
-    showinfo("Регистратор", "Работа завершена")
  
 invalid_txt = Listbox(root, bg="white", fg="black")
 valid_txt = Text(root, bg="white", fg="black")
