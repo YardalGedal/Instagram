@@ -174,4 +174,4 @@ valid_scrollbar.config(command=valid_txt.yview)
  
 
 main = ThreadPool(1)
-main.map_async(root.mainloop(), 0)
+main.map_async(root.mainloop())
