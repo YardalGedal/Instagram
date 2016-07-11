@@ -69,9 +69,9 @@ root.maxsize(width=1000,height=400)
  
 def buttonreg(event):
     pool = ThreadPool(int(cthreads.get()))
-    pool.map_async(nf, proxylist,callback=ctypes.windll.user32.MessageBoxW(None,"Выполнение завершено","Регистратор",0x40 | 0x0))
+    pool.map_async(nf, proxylist, callback=ctypes.windll.user32.MessageBoxW(None,"Выполнение завершено","Регистратор",0x40 | 0x0))
     pool.close()
-    pool.join()
+    #pool.join()
  
 invalid_txt = Listbox(root, bg="white", fg="black")
 valid_txt = Text(root, bg="white", fg="black")
@@ -169,4 +169,5 @@ valid_txt.config(yscrollcommand=valid_scrollbar.set)
 valid_scrollbar.config(command=valid_txt.yview)
  
 gui = ThreadPool(1)
-gui.map(root.mainloop())
+gui.map_async(root.mainloop())
+gui.close()
