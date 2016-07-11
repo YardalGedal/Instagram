@@ -70,7 +70,7 @@ root.maxsize(width=1000,height=400)
 def buttonreg(event):
     pool = ThreadPool(int(cthreads.get()))
     pool.map(nf, proxylist)
-    pool.join()
+    #pool.join()
     pool.close()
     ctypes.windll.user32.MessageBoxW(None,"Выполнение завершено","Регистратор",0x40 | 0x0)
  
