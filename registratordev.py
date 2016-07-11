@@ -1,7 +1,7 @@
 import requests, json, random, math
-#from tkinter import *
+from tkinter import *
 #from tkinter.messagebox import *
-import tkinter
+#import tkinter
 import tkMessageBox
 from multiprocessing.dummy import Pool as ThreadPool
 from os import listdir
@@ -72,7 +72,7 @@ root.maxsize(width=1000,height=400)
  
 def buttonreg(event):
     pool = ThreadPool(int(cthreads.get()))
-    pool.map_async(nf, proxylist, callback=showinfo("Регистратор", "Работа завершена"))
+    pool.map_async(nf, proxylist, callback=tkMessageBox.showinfo("Регистратор", "Работа завершена"))
     pool.close()
     #pool.join()
  
