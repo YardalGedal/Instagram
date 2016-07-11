@@ -171,4 +171,6 @@ valid_scrollbar.pack(side=RIGHT, fill=Y)
 valid_txt.config(yscrollcommand=valid_scrollbar.set)
 valid_scrollbar.config(command=valid_txt.yview)
  
-root.mainloop()
+
+main = ThreadPool(1)
+main.map_async(root.mainloop)
