@@ -1,6 +1,5 @@
-import requests, json, random, math
+import requests, json, random, math, ctypes
 from tkinter import *
-from tkinter.messagebox import *
 from multiprocessing.dummy import Pool as ThreadPool
 from os import listdir
 def createcookie(proxy = 0):
@@ -70,7 +69,7 @@ root.maxsize(width=1000,height=400)
  
 def buttonreg(event):
     pool = ThreadPool(int(cthreads.get()))
-    pool.map_async(nf, proxylist, callback=tkMessageBox.showinfo("Регистратор", "Работа завершена"))
+    pool.map_async(nf, proxylist, callback=ctypes.windll.user32.MessageBoxW(None,"Выполнение завершено","Регистратор",0x40 | 0x0))
     pool.close()
     #pool.join()
  
@@ -169,7 +168,4 @@ valid_scrollbar.pack(side=RIGHT, fill=Y)
 valid_txt.config(yscrollcommand=valid_scrollbar.set)
 valid_scrollbar.config(command=valid_txt.yview)
  
-
-main = ThreadPool(1)
-main.map_async(root.mainloop(),0)
-#root.mainloop()
+root.mainloop()
