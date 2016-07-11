@@ -1,4 +1,4 @@
-import requests, json, random, math, ctypes
+import requests, json, random, ctypes
 from tkinter import *
 from multiprocessing.dummy import Pool as ThreadPool
 from os import listdir
