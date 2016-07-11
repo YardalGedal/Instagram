@@ -1,7 +1,7 @@
 import requests, json, random, math
 #from tkinter import *
 #from tkinter.messagebox import *
-import Tkinter
+import tkinter
 import tkMessageBox
 from multiprocessing.dummy import Pool as ThreadPool
 from os import listdir
