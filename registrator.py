@@ -43,7 +43,7 @@ def nf(proxy):
             pass
         
         r = register(available_r,login,password,{'https':proxy.rstrip()})
-        print('Account registration attempt ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n available: ' + json.loads(available_r.text) + '\n response: ' + json.loads(r.text) + '\n')
+        print('Account registration attempt ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n available: ' + str(json.loads(available_r.text)) + '\n response: ' + str(json.loads(r.text)) + '\n')
         jsonlr = json.loads(r.text)
         invalid_txt.insert(END, proxy + ' | '+ str(jsonlr))
         if jsonlr['account_created'] == True:
