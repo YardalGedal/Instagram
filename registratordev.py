@@ -30,9 +30,11 @@ forgender = {'Мужской': '1', 'Женский': '2', 'Не указано'
 def nf(proxy):
     try:
         global loginlist
-        lp = login_gen(loginlist)
-        login = lp[0]
-        password = lp[1].rstrip()
+        #lp = login_gen(loginlist)
+        #login = lp[0]
+        #password = lp[1].rstrip()
+        login = random.randrange(1000,9999) + 'ulya' + random.randrange(100,999) + 'gay'
+        password = random.randrange(1000000,9999999)
         cookie = createcookie({'https':proxy.rstrip()})
         available_r = available(cookie,login,password, {'https':proxy.rstrip()})
         
