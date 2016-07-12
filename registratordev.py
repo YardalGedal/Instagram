@@ -73,7 +73,7 @@ def buttonreg(event):
     pool = ThreadPool(int(cthreads.get()))
     pool.map_async(nf, proxylist)
     pool.close()
-    ctypes.windll.user32.MessageBoxW(None,"Выполнение завершено","Регистратор",0x40 | 0x0))
+    ctypes.windll.user32.MessageBoxW(None,"Выполнение завершено","Регистратор",0x40 | 0x0)
 
 invalid_txt = Listbox(root, bg="white", fg="black")
 valid_txt = Text(root, bg="white", fg="black")
