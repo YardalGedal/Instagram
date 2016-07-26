@@ -40,7 +40,7 @@ def nf(proxy):
         available_r = available(cookie,login,password, {'https':proxy.rstrip()})
         
         try:
-            login = json.loads(available_r.text)['username_suggestions'][2]
+            login = json.loads(available_r.text)['username_suggestions'][0]
         except:
             pass
         
