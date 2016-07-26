@@ -34,8 +34,8 @@ def nf(proxy):
         #lp = login_gen(loginlist)
         #login = lp[0]
         #password = lp[1].rstrip()
-        login = 'ss' + random.randrange(100,999) + 'saint'
-        password = random.randrange(1000000,9999999)
+        login = 'ss' + str(random.randrange(100,999)) + 'saint'
+        password = str(random.randrange(1000000,9999999))
         cookie = createcookie({'https':proxy.rstrip()})
         available_r = available(cookie,login,password, {'https':proxy.rstrip()})
         
