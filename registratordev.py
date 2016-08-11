@@ -36,15 +36,24 @@ def nf(proxy):
         password = lp[1].rstrip()
         cookie = createcookie({'https':'http://' + proxy.rstrip()})
         time.sleep(5)
-        available_r = available(cookie,login,password, {'https':'http://' + proxy.rstrip()})
+        available_r1 = available(cookie,login,password, {'https':'http://' + proxy.rstrip()})
         time.sleep(5)
         try:
             login = json.loads(available_r.text)['username_suggestions'][0]
         except:
             pass
         
-        r = register(available_r,login,password,{'https':'http://' + proxy.rstrip()})
-        print('Account registration attempt ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n availability: ' + str(json.loads(available_r.text)) + '\n response: ' + str(json.loads(r.text)) + '\n')
+        r1 = json.loads(register(available_r,login,password,{'https':'http://' + proxy.rstrip()}))
+        if str(r['account_created']) == 'False':
+            available_r2 = available(cookie,login,password, {'https':'http://' + proxy.rstrip()})
+            time.sleep(5)
+            try:
+                login = json.loads(available_r.text)['username_suggestions'][0]
+            except:
+                pass
+            r2 = json.loads(register(available_r,login,password,{'https':'http://' + proxy.rstrip()}))
+            
+        print('Account registration attempt ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n Attemp #1 \n availability: ' + str(json.loads(available_r1.text)) + '\n response: ' + str(r1.text) + '\n Attemp #2 \n availability: ' + str(json.loads(available_r1.text)) + '\n response: ' + str(r2.text))
         jsonlr = json.loads(r.text)
         invalid_txt.insert(END, proxy + ' | '+ str(jsonlr))
         if jsonlr['account_created'] == True:
