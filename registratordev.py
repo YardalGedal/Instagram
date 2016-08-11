@@ -35,9 +35,9 @@ def nf(proxy):
         login = lp[0]
         password = lp[1].rstrip()
         cookie = createcookie({'https':'http://' + proxy.rstrip()})
-        time.sleep(3)
+        time.sleep(5)
         available_r = available(cookie,login,password, {'https':'http://' + proxy.rstrip()})
-        time.sleep(3)
+        time.sleep(5)
         try:
             login = json.loads(available_r.text)['username_suggestions'][0]
         except:
