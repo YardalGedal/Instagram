@@ -1,13 +1,14 @@
-import requests, json, random, ctypes
+import requests, json, random, math
 from tkinter import *
+from tkinter.messagebox import *
 from multiprocessing.dummy import Pool as ThreadPool
 from os import listdir
 def createcookie(proxy = 0):
-    return requests.get('https://www.instagram.com/accounts/web_create_ajax/', headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, proxies=proxy)
+    return requests.get('https://www.instagram.com/accounts/login', headers = {'referer' : 'https://www.instagram.com', 'origin':'https://www.instagram.com/', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, proxies=proxy)
 def register(c,login,password,proxy = 0):
-    return requests.post('https://www.instagram.com/accounts/web_create_ajax/', headers = {'referer':'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies = c.cookies, data = {'email':login+'@gmail.com', 'password':password, 'username':login, 'fullName':login}, proxies=proxy)
+    return requests.post('https://www.instagram.com/accounts/web_create_ajax/', headers = {'referer':'https://www.instagram.com/accounts/login', 'origin':'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies = c.cookies, data = {'email':login+'@gmail.com', 'password':password, 'username':login, 'fullName':login}, proxies=proxy)
 def available(c,login,password, proxy=0):
-    return requests.post('https://www.instagram.com/accounts/web_create_ajax/attempt/', headers = {'referer':'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies = c.cookies, data = {'email':login+'@gmail.com', 'password':password, 'username':login, 'first_name':login}, proxies=proxy)
+    return requests.post('https://www.instagram.com/accounts/web_create_ajax/attempt/', headers = {'referer':'https://www.instagram.com/accounts/login', 'origin':'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies = c.cookies, data = {'email':login+'@gmail.com', 'password':password, 'username':login, 'first_name':login}, proxies=proxy)
 def uploadphoto(c,photo, proxy = 0):
     files = {'profile_pic': (photo, open('avatars/'+photo, 'rb'), 'image/jpeg')}
     return requests.post('https://www.instagram.com/accounts/web_change_profile_picture/', headers={'referer': 'https://www.instagram.com/', 'origin': 'https://www.instagram.com/', 'x-csrftoken':c.cookies['csrftoken'], 'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2791.0 Safari/537.36'}, cookies=c.cookies, files=files, proxies=proxy)
@@ -30,20 +31,18 @@ forgender = {'Мужской': '1', 'Женский': '2', 'Не указано'
 def nf(proxy):
     try:
         global loginlist
-        #lp = login_gen(loginlist)
-        #login = lp[0]
-        #password = lp[1].rstrip()
-        login = str(random.randrange(1000,9999)) + 'ulya' + str(random.randrange(100,999)) + 'gay'
-        password = str(random.randrange(1000000,9999999))
-        cookie = createcookie({'https':proxy.rstrip()})
-        available_r = available(cookie,login,password, {'https':proxy.rstrip()})
+        lp = login_gen(loginlist)
+        login = lp[0]
+        password = lp[1].rstrip()
+        cookie = createcookie({'https':'http://' + proxy.rstrip()})
+        available_r = available(cookie,login,password, {'https':'http://' + proxy.rstrip()})
         
         try:
             login = json.loads(available_r.text)['username_suggestions'][0]
         except:
             pass
         
-        r = register(available_r,login,password,{'https':proxy.rstrip()})
+        r = register(available_r,login,password,{'https':'http://' + proxy.rstrip()})
         print('Account registration attempt ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n availability: ' + str(json.loads(available_r.text)) + '\n response: ' + str(json.loads(r.text)) + '\n')
         jsonlr = json.loads(r.text)
         invalid_txt.insert(END, proxy + ' | '+ str(jsonlr))
@@ -53,17 +52,16 @@ def nf(proxy):
             valids.write(login + ':' + password + '\n')
             valids.close()
             global photolist
-            u = userinfo(r, login, i_p_n.get(), bio.get(), forgender[gender_v.get()], e_u.get(), {'https':proxy.rstrip()})
+            u = userinfo(r, login, i_p_n.get(), bio.get(), forgender[gender_v.get()], e_u.get(), {'https':'http://' + proxy.rstrip()})
             print(u.text)
             photo = photolist[random.randrange(0, len(photolist) - 1)]
-            p = uploadphoto(u, photo, {'https':proxy.rstrip()})
+            p = uploadphoto(u, photo, {'https':'http://' + proxy.rstrip()})
             print('p ' + p.text)
     except:
         pass
  
  
 proxylist = open("proxy.txt", "r").readlines()
-global root
 root = Tk()
 root.title('Авторегистратор аккаунтов в инстаграме')
 root.minsize(width=1000,height=400)
@@ -73,8 +71,8 @@ def buttonreg(event):
     pool = ThreadPool(int(cthreads.get()))
     pool.map_async(nf, proxylist)
     pool.close()
-    ctypes.windll.user32.MessageBoxW(None,"Выполнение завершено","Регистратор",0x40 | 0x0)
-
+    #pool.join()
+ 
 invalid_txt = Listbox(root, bg="white", fg="black")
 valid_txt = Text(root, bg="white", fg="black")
 invalid_lbl = Label(root, text="Лог работы:")
@@ -169,6 +167,5 @@ valid_scrollbar = Scrollbar(valid_txt)
 valid_scrollbar.pack(side=RIGHT, fill=Y)
 valid_txt.config(yscrollcommand=valid_scrollbar.set)
 valid_scrollbar.config(command=valid_txt.yview)
-
-gui = ThreadPool(1)
-gui.map_async(root.mainloop())
+ 
+root.mainloop()
