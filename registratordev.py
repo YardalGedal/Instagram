@@ -1,4 +1,4 @@
-import requests, json, random, math
+import requests, json, random, math, time
 from tkinter import *
 from tkinter.messagebox import *
 from multiprocessing.dummy import Pool as ThreadPool
@@ -35,8 +35,9 @@ def nf(proxy):
         login = lp[0]
         password = lp[1].rstrip()
         cookie = createcookie({'https':'http://' + proxy.rstrip()})
+        time.sleep(3)
         available_r = available(cookie,login,password, {'https':'http://' + proxy.rstrip()})
-        
+        time.sleep(3)
         try:
             login = json.loads(available_r.text)['username_suggestions'][0]
         except:
