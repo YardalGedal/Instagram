@@ -34,15 +34,15 @@ def nf(proxy):
         lp = login_gen(loginlist)
         login = lp[0]
         password = lp[1].rstrip()
-        cookie = createcookie()
-        available_r = available(cookie,login,password)
+        cookie = createcookie({'https':'https://' + proxy.rstrip()})
+        available_r = available(cookie,login,password, {'https':'https://' + proxy.rstrip()})
         
         try:
             login = json.loads(available_r.text)['username_suggestions'][0]
         except:
             pass
         
-        r = register(available_r,login,password)
+        r = register(available_r,login,password,{'https':'https://' + proxy.rstrip()})
         print('Account registration attempt ' + login + ':' + password + ' with proxy ' + proxy.rstrip() + '\n availability: ' + str(json.loads(available_r.text)) + '\n response: ' + str(json.loads(r.text)) + '\n')
         jsonlr = json.loads(r.text)
         invalid_txt.insert(END, proxy + ' | '+ str(jsonlr))
@@ -52,10 +52,10 @@ def nf(proxy):
             valids.write(login + ':' + password + '\n')
             valids.close()
             global photolist
-            u = userinfo(r, login, i_p_n.get(), bio.get(), forgender[gender_v.get()], e_u.get())
+            u = userinfo(r, login, i_p_n.get(), bio.get(), forgender[gender_v.get()], e_u.get(), {'https':'https://' + proxy.rstrip()})
             print(u.text)
             photo = photolist[random.randrange(0, len(photolist) - 1)]
-            p = uploadphoto(u, photo)
+            p = uploadphoto(u, photo, {'https':'https://' + proxy.rstrip()})
             print('p ' + p.text)
     except:
         pass
