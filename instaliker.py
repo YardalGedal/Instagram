@@ -11,17 +11,17 @@ def login(c, v, proxy):
     login = v[0]
     pwd = v[1].rstrip()
     return requests.post('https://www.instagram.com/accounts/login/ajax/', headers={'referer': 'https://www.instagram.com/accounts/login', 'x-csrftoken': c.cookies['csrftoken'],
-                                  'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest'}, cookies=c.cookies, data={'username': login, 'password': pwd}, proxies={'https':'http://' + proxy.rstrip()})
+                                  'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest'}, cookies=c.cookies, data={'username': login, 'password': pwd}, proxies={'https': proxy.rstrip()})
 def follow(c, id, proxy):
     return requests.post('https://www.instagram.com/web/friendships/' + id + '/follow/', headers={'referer': 'https://www.instagram.com/', 'x-csrftoken': c.cookies['csrftoken'],
-                                  'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest'}, cookies=c.cookies, proxies={'https':'http://' + proxy.rstrip()})
+                                  'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest'}, cookies=c.cookies, proxies={'https': proxy.rstrip()})
 def like(c, id, proxy):
     global link_value
     return requests.post('https://www.instagram.com/web/likes/' + id + '/like/', headers={'referer': link_value.get(), 'x-csrftoken': c.cookies['csrftoken'],
-                                  'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest'}, cookies=c.cookies, proxies={'https':'http://' + proxy.rstrip()})
+                                  'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest'}, cookies=c.cookies, proxies={'https': proxy.rstrip()})
 def comment(c, id, comment_text, proxy):
     return requests.post('https://www.instagram.com/web/comments/' + id + '/add/', headers={'referer': 'https://www.instagram.com/', 'x-csrftoken': c.cookies['csrftoken'],
-                                  'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest'}, data={'comment_text': comment_text}, cookies=c.cookies, proxies={'https':'http://' + proxy.rstrip()})
+                                  'x-instagram-ajax': '1', 'x-requested-with': 'XMLHttpRequest'}, data={'comment_text': comment_text}, cookies=c.cookies, proxies={'https': proxy.rstrip()})
 def follow_n(loginpassword):
     global k, aid
     print(loginpassword)
